@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace]
-members = ["crates/*"]
+members = ["challenges/*"]
 
 [workspace.dependencies]
 criterion = "0.4.0"
 
 [dependencies]
-day03 = { path = "./crates/day03" }
+day03 = { path = "./challenges/day03" }
