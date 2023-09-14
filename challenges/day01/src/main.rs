@@ -1,34 +1,28 @@
-use std::{fs::{File}, path::Path, io::{Error, BufReader, BufRead}};
+use std::io::Error;
+
+use day01::{part_01, part_02};
+use utils::read_file_bytes;
 
 fn main() -> Result<(), Error> {
-    let file = File::open(Path::new("resources/day01.txt"))?;
-    let mut reader = BufReader::new(file);
-    let mut buffer = String::new();
-    let mut chunk = Vec::<u16>::new();
-    let mut report = Vec::<u16>::new();
+    let max_01 = match read_file_bytes("resources/day01.txt") {
+        Ok(bytes) => part_01::solution_01(bytes),
+        _ => 0 as u32,
+    };
+    let max_02 = match read_file_bytes("resources/day01.txt") {
+        Ok(bytes) => part_01::solution_02(bytes),
+        _ => 0 as u32,
+    };
 
-    reader.read_line(&mut buffer)?;
+    println!("Par01 solution_01: {max_01}");
+    println!("Par02 solution_02: {max_02}");
 
-    while buffer.len() > 0 {
-        let calories = buffer.split("\n")
-            .take(1)
-            .next().unwrap()
-            .parse::<u16>()
-            .unwrap_or(0);
-        chunk.push(calories);
+    let part01_sol01 = match read_file_bytes("resources/day01.txt") {
+        Ok(bytes) => part_02::solution_01(bytes),
+        _ => 0 as u32,
+    };
 
-        if buffer.eq("\n"){
-            if chunk.len() > 0 {
-                let total = chunk.iter().sum();
-                report.push(total);
-            }
-            chunk.clear();
-        }
-        buffer.clear();
-        reader.read_line(&mut buffer)?;
-    }
+    println!("Par02 solution_01: {part01_sol01}");
 
-    println!("Maximum calories: {:?}", report.iter().max().unwrap());
 
     Ok(())
 }
